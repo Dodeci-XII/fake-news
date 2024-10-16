@@ -2,5 +2,11 @@
     "generate_news": "Générer des Fake News",
     "subject_placeholder": "Sujet de la Fake News",
     "error_message": "Erreur lors de la génération de la fake news",
-    "fake_news": "Fake News :"
+    "fake_news": "Fake News :",
+    "title": "Générateur de Fake News",
+    "home": "Accueil",
+    "generate": "Générer des Fake News",
+    "language_label": "Langue",
+    "welcome": "Bienvenue sur le générateur de Fake News",
+    "startGenerating": "Commencer à générer des Fake News"
   }

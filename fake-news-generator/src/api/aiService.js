@@ -1,11 +1,13 @@
 import axios from "axios";
 
-export const generateFakeNews = async (subject) => {
+export const generateFakeNews = async (subject, language) => {
   const apiKey = process.env.REACT_APP_API_KEY;
   const baseURL = "https://api.ai21.com/studio/v1/chat/completions";
 
-  const userPrompt = `Tell me an absurd and funny fake news about ${subject}`;
-  console.log("Prompt : ", userPrompt);
+  const userPrompt =
+    language === "fr"
+      ? `Raconte-moi une fake news absurde et drôle sur ${subject}`
+      : `Tell me an absurd and funny fake news about ${subject}`;
 
   const payload = {
     model: "jamba-1.5-large",
@@ -33,7 +35,6 @@ export const generateFakeNews = async (subject) => {
       },
     });
 
-    // Récupérez le texte directement depuis la réponse
     return response.data.choices[0].message.content;
   } catch (error) {
     console.error("Error generating fake news:", error.response?.data || error);

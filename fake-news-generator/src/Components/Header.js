@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next"; // Assurez-vous d'importer useTranslation
+import { useTranslation } from "react-i18next";
+import { Select, MenuItem } from "@mui/material";
 
 const Header = () => {
-  const { i18n } = useTranslation(); // Récupérer l'instance i18n
+  const { i18n } = useTranslation();
+  const [language, setLanguage] = useState("en");
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
+    setLanguage(lng);
   };
 
   return (
@@ -25,12 +28,19 @@ const Header = () => {
         <Button color="inherit" component={Link} to="/generate">
           {i18n.t("generate")}
         </Button>
-        <Button color="inherit" onClick={() => changeLanguage("en")}>
-          English
-        </Button>
-        <Button color="inherit" onClick={() => changeLanguage("fr")}>
-          Français
-        </Button>
+
+        {/* Menu déroulant pour la sélection de la langue */}
+        <Select
+          value={language}
+          onChange={(e) => changeLanguage(e.target.value)}
+          displayEmpty
+          inputProps={{ "aria-label": "Select Language" }}
+          variant="outlined"
+          style={{ color: "white" }}
+        >
+          <MenuItem value="en">English</MenuItem>
+          <MenuItem value="fr">Français</MenuItem>
+        </Select>
       </Toolbar>
     </AppBar>
   );

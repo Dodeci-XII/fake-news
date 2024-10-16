@@ -6,26 +6,28 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import MenuItem from "@mui/material/MenuItem"; // Importer MenuItem
+import MenuItem from "@mui/material/MenuItem";
+import { useTranslation } from "react-i18next";
 
 const GenerateNews = () => {
   const [subject, setSubject] = useState("");
   const [loading, setLoading] = useState(false);
   const [news, setNews] = useState("");
   const [error, setError] = useState(null);
-  const [language, setLanguage] = useState("en"); // État pour la langue
+  const [language, setLanguage] = useState("en");
+  const { t } = useTranslation();
 
   const handleGenerate = async () => {
-    if (!subject.trim()) return; // Vérifie si l'entrée est vide ou contient uniquement des espaces
+    if (!subject.trim()) return;
 
     setLoading(true);
     setError(null);
 
     try {
-      const fakeNews = await generateFakeNews(subject, language); // Passer la langue ici
-      setNews(fakeNews); // Assurez-vous que fakeNews contient le texte correct
+      const fakeNews = await generateFakeNews(subject, language);
+      setNews(fakeNews);
     } catch (err) {
-      setError(err.message || "Erreur lors de la génération de la fake news");
+      setError(err.message || t("errorGeneratingNews"));
     } finally {
       setLoading(false);
     }
@@ -34,10 +36,10 @@ const GenerateNews = () => {
   return (
     <div style={{ padding: "20px" }}>
       <Typography variant="h4" gutterBottom>
-        Générer des Fake News
+        {t("title")}
       </Typography>
       <TextField
-        label="Sujet de la Fake News"
+        label={t("subject_placeholder")}
         variant="outlined"
         fullWidth
         value={subject}
@@ -46,7 +48,7 @@ const GenerateNews = () => {
       />
       <TextField
         select
-        label="Choisir la langue"
+        label={t("language_label")}
         value={language}
         onChange={(e) => setLanguage(e.target.value)}
         style={{ marginBottom: "20px" }}
@@ -60,7 +62,7 @@ const GenerateNews = () => {
         onClick={handleGenerate}
         disabled={loading}
       >
-        {loading ? <CircularProgress size={24} /> : "Générer"}
+        {loading ? <CircularProgress size={24} /> : t("generate")}
       </Button>
 
       {error && (
@@ -72,7 +74,7 @@ const GenerateNews = () => {
       {news && (
         <Card style={{ marginTop: "20px" }}>
           <CardContent>
-            <Typography variant="h5">Fake News :</Typography>
+            <Typography variant="h5">{t("generateNews.fakeNews")}</Typography>
             <Typography variant="body1">{news}</Typography>
           </CardContent>
         </Card>
