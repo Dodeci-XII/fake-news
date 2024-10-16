@@ -6,23 +6,24 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import MenuItem from "@mui/material/MenuItem"; // Importer MenuItem
 
 const GenerateNews = () => {
   const [subject, setSubject] = useState("");
   const [loading, setLoading] = useState(false);
   const [news, setNews] = useState("");
   const [error, setError] = useState(null);
+  const [language, setLanguage] = useState("en"); // État pour la langue
 
   const handleGenerate = async () => {
-    if (!subject.trim()) return; // Check for empty or whitespace-only input
+    if (!subject.trim()) return; // Vérifie si l'entrée est vide ou contient uniquement des espaces
 
     setLoading(true);
     setError(null);
 
     try {
-      const resultFakeNews = await generateFakeNews(subject);
-      const fakeNews = resultFakeNews.data.choices[0].message.content;
-      setNews(fakeNews); // Met à jour l'état avec la fake news générée
+      const fakeNews = await generateFakeNews(subject, language); // Passer la langue ici
+      setNews(fakeNews); // Assurez-vous que fakeNews contient le texte correct
     } catch (err) {
       setError(err.message || "Erreur lors de la génération de la fake news");
     } finally {
@@ -43,6 +44,16 @@ const GenerateNews = () => {
         onChange={(e) => setSubject(e.target.value)}
         style={{ marginBottom: "20px" }}
       />
+      <TextField
+        select
+        label="Choisir la langue"
+        value={language}
+        onChange={(e) => setLanguage(e.target.value)}
+        style={{ marginBottom: "20px" }}
+      >
+        <MenuItem value="en">Anglais</MenuItem>
+        <MenuItem value="fr">Français</MenuItem>
+      </TextField>
       <Button
         variant="contained"
         color="primary"

@@ -1,0 +1,6 @@
+{
+    "generate_news": "Générer des Fake News",
+    "subject_placeholder": "Sujet de la Fake News",
+    "error_message": "Erreur lors de la génération de la fake news",
+    "fake_news": "Fake News :"
+  }

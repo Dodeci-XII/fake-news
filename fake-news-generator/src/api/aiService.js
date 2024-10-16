@@ -33,8 +33,8 @@ export const generateFakeNews = async (subject) => {
       },
     });
 
-    return response;
-    // console.log("API Response:", response.data.choices[0].message.content);
+    // Récupérez le texte directement depuis la réponse
+    return response.data.choices[0].message.content;
   } catch (error) {
     console.error("Error generating fake news:", error.response?.data || error);
     throw new Error(
