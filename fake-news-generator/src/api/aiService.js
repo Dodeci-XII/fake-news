@@ -6,8 +6,8 @@ export const generateFakeNews = async (subject, language) => {
 
   const userPrompt =
     language === "fr"
-      ? `Raconte-moi une fake news absurde et drôle sur ${subject}`
-      : `Tell me an absurd and funny fake news about ${subject}`;
+      ? `Raconte-moi une fake news absurde et drôle sur ${subject}. Donne uniquement la fake news au format markdown et rien d'autre`
+      : `Tell me an absurd and funny fake news about ${subject}. Give me only the fake news with a markdown format and nothing else`;
 
   const payload = {
     model: "jamba-1.5-large",

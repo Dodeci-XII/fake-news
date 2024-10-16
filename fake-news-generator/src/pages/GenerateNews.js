@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import MenuItem from "@mui/material/MenuItem";
-import { useTranslation } from "react-i18next";
+import ReactMarkdown from "react-markdown";
 import "../styles/GenerateNews.css";
 
 const GenerateNews = () => {
@@ -16,7 +16,6 @@ const GenerateNews = () => {
   const [news, setNews] = useState("");
   const [error, setError] = useState(null);
   const [language, setLanguage] = useState("en");
-  const { t } = useTranslation();
 
   const handleGenerate = async () => {
     if (!subject.trim()) return;
@@ -28,7 +27,7 @@ const GenerateNews = () => {
       const fakeNews = await generateFakeNews(subject, language);
       setNews(fakeNews);
     } catch (err) {
-      setError(err.message || t("errorGeneratingNews"));
+      setError(err.message || "Erreur lors de la génération de la fake news");
     } finally {
       setLoading(false);
     }
@@ -36,25 +35,23 @@ const GenerateNews = () => {
 
   return (
     <div className="container">
-      {" "}
-      {/* Utilisation de la classe CSS container */}
       <Typography variant="h4" gutterBottom>
-        {t("title")}
+        Generate Fake News
       </Typography>
       <TextField
-        label={t("subject_placeholder")}
+        label="Subject of the Fake News"
         variant="outlined"
         fullWidth
+        className="text-field"
         value={subject}
         onChange={(e) => setSubject(e.target.value)}
-        className="text-field" // Classe CSS pour le champ de texte
       />
       <TextField
         select
-        label={t("language_label")}
+        label="Choose Language"
         value={language}
         onChange={(e) => setLanguage(e.target.value)}
-        className="text-field" // Classe CSS pour le champ de texte
+        className="text-field"
       >
         <MenuItem value="en">Anglais</MenuItem>
         <MenuItem value="fr">Français</MenuItem>
@@ -64,24 +61,19 @@ const GenerateNews = () => {
         color="primary"
         onClick={handleGenerate}
         disabled={loading}
-        className="button" // Classe CSS pour le bouton
+        className="button"
       >
-        {loading ? <CircularProgress size={24} /> : t("generate")}
+        {loading ? <CircularProgress size={24} /> : "Generate"}
       </Button>
-      {error && (
-        <Typography color="error" className="error-message">
-          {" "}
-          {/* Classe CSS pour le message d'erreur */}
-          {error}
-        </Typography>
-      )}
+
+      {error && <Typography className="error-message"> {error}</Typography>}
+
       {news && (
         <Card className="card">
           {" "}
-          {/* Classe CSS pour la carte */}
           <CardContent>
-            <Typography variant="h5">{t("fake_news")}</Typography>
-            <Typography variant="body1">{news}</Typography>
+            <Typography variant="h5">Fake News:</Typography>
+            <ReactMarkdown>{news}</ReactMarkdown> {/* Affichage du Markdown */}
           </CardContent>
         </Card>
       )}
